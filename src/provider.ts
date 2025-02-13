@@ -20,11 +20,31 @@ export async function getEdits(editor: vs.TextEditor, edit: vs.TextEditorEdit) {
         var result = formatting.process(editor, options);
         if (result) {
             const range = new vs.Range(
-                new vs.Position(0, 0), editor.document.lineAt(editor.document.lineCount - 1).range.end);
+                new vs.Position(0, 0),
+                editor.document.lineAt(editor.document.lineCount - 1).range.end
+            );
             edit.replace(range, result);
         }
-    }
-    catch (ex) {
+    } catch (ex) {
         vs.window.showWarningMessage(ex);
     }
-};
+}
+
+export class FormatUsingsCodeActionProvider implements vs.CodeActionProvider {
+    provideCodeActions(
+        document: vs.TextDocument,
+        range: vs.Range,
+        context: vs.CodeActionContext,
+        token: vs.CancellationToken
+    ): vs.CodeAction[] {
+        const action = new vs.CodeAction(
+            'Organize Usings',
+            vs.CodeActionKind.SourceOrganizeImports
+        );
+        action.command = {
+            command: 'csharpFormatUsings.formatUsings',
+            title: 'Format Usings',
+        };
+        return [action];
+    }
+}

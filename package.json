@@ -1,13 +1,13 @@
 {
-    "name": "csharp-format-usings",
-    "displayName": "C# Format Usings",
-    "description": "Sort C# using statements and remove unnecessary usings",
+    "name": "csharp-format-usings-with-code-action",
+    "displayName": "C# Format Usings With Code Action",
+    "description": "Sort C# using statements and remove unnecessary usings, now with code action!",
     "icons": {
         "default": "icon-128.png"
     },
     "icon": "icon-256.png",
-    "version": "0.0.4",
-    "publisher": "gaoshan0621",
+    "version": "0.0.1",
+    "publisher": "Natthapas",
     "engines": {
         "vscode": "^1.48.0"
     },
@@ -18,11 +18,10 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:csharpFormatUsings.formatUsings"
+        "onLanguage:csharp"
     ],
     "author": {
-        "name": "Shan Gao",
-        "email": "gaoshan0621@gmail.com"
+        "name": "Natthapas Saengnikornkiat"
     },
     "main": "./out/extension.js",
     "contributes": {
@@ -41,6 +40,14 @@
                 }
             ]
         },
+        "codeActions": [
+            {
+                "language": "csharp",
+                "actions": [
+                    "source.organizeImports"
+                ]
+            }
+        ],
         "configuration": {
             "title": "C# Format Usings configuration",
             "properties": {
@@ -90,25 +97,25 @@
         "package": "vsce package"
     },
     "devDependencies": {
-        "@types/vscode": "^1.48.0",
         "@types/glob": "^7.1.1",
         "@types/mocha": "^7.0.2",
         "@types/node": "^13.11.0",
-        "eslint": "^6.8.0",
-        "@typescript-eslint/parser": "^2.30.0",
         "@typescript-eslint/eslint-plugin": "^2.30.0",
+        "@typescript-eslint/parser": "^2.30.0",
+        "eslint": "^6.8.0",
         "glob": "^7.1.6",
         "mocha": "^7.1.2",
         "typescript": "^3.8.3",
+        "vscode": "^1.1.37",
         "vscode-test": "^1.3.0"
     },
     "license": "MIT",
-    "homepage": "https://github.com/gaoshan0621/vscode-csharp-format-usings",
+    "homepage": "https://github.com/Nat-thapas/vscode-csharp-format-usings",
     "repository": {
         "type": "git",
-        "url": "https://github.com/gaoshan0621/vscode-csharp-format-usings"
+        "url": "https://github.com/Nat-thapas/vscode-csharp-format-usings"
     },
     "bugs": {
-        "url": "https://github.com/gaoshan0621/vscode-csharp-format-usings/issues"
+        "url": "https://github.com/Nat-thapas/vscode-csharp-format-usings/issues"
     }
 }

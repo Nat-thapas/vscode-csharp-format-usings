@@ -19,7 +19,7 @@ const replaceCode = (source: string, condition: RegExp, cb: Func<string, string>
     const flags = condition.flags.replace(/[gm]/g, '');
     const regexp = new RegExp(condition.source, `gm${flags}`);
     return source.replace(regexp, (s: string, ...args: string[]) => {
-        if (s[0] === '"' || s[0] === '\'' || (s[0] === '/' && (s[1] === '/' || s[1] === '*'))) {
+        if (s[0] === '"' || s[0] === "'" || (s[0] === '/' && (s[1] === '/' || s[1] === '*'))) {
             return s;
         }
         return cb(s, ...args.slice(1));
@@ -41,14 +41,11 @@ export function process(editor: vs.TextEditor, options: IFormatOptions): string 
     var content = editor.document.getText();
     const endOfline = editor.document.eol === vs.EndOfLine.LF ? '\n' : '\r\n';
     const firstUsing = content.search(/using\s+[.\w]+;/);
-    const firstUsingLine = content.substring(0, firstUsing)
-        .split(endOfline)
-        .length - 1;
+    const firstUsingLine = content.substring(0, firstUsing).split(endOfline).length - 1;
 
-    content = replaceCode(content, /\s*(using\s+[.\w]+;\s*)+/gm, rawBlock => {
-        const lines = rawBlock.split(endOfline)
-            .map(l => l?.trim() ?? '');     // remove heading and trailing whitespaces
-        const usings = lines.filter(l => l.length > 0);
+    content = replaceCode(content, /\s*(using\s+[.\w]+;\s*)+/gm, (rawBlock) => {
+        const lines = rawBlock.split(endOfline).map((l) => l?.trim() ?? ''); // remove heading and trailing whitespaces
+        const usings = lines.filter((l) => l.length > 0);
 
         if (options.removeUnnecessaryUsings) {
             removeUnncessaryUsings(editor, usings, firstUsingLine);
@@ -63,7 +60,11 @@ export function process(editor: vs.TextEditor, options: IFormatOptions): string 
         // if there are characters, like comments, before usings
         if (content.substring(0, firstUsing).search(/./) >= 0) {
             // Keep numEmptyLinesBeforeUsings empty lines before usings if there are in the source
-            for (var i = Math.min(options.numEmptyLinesBeforeUsings, lines.length - 1); i >= 0; i--) {
+            for (
+                var i = Math.min(options.numEmptyLinesBeforeUsings, lines.length - 1);
+                i >= 0;
+                i--
+            ) {
                 if (lines[i].length === 0) {
                     usings.unshift('');
                 }
@@ -83,10 +84,18 @@ export function process(editor: vs.TextEditor, options: IFormatOptions): string 
     return content;
 }
 
-export function removeUnncessaryUsings(editor: vs.TextEditor, usings: string[], firstUsingLine : number) {
-    const unnecessaryUsingIndexs = vs.languages.getDiagnostics(editor.document.uri)
-        .filter(diagnostic => diagnostic.source === 'csharp' && 'CS8019' === diagnostic.code?.toString())
-        .map(diagnostic => diagnostic.range.start.line - firstUsingLine);
+export function removeUnncessaryUsings(
+    editor: vs.TextEditor,
+    usings: string[],
+    firstUsingLine: number
+) {
+    const unnecessaryUsingIndexs = vs.languages
+        .getDiagnostics(editor.document.uri)
+        .filter(
+            (diagnostic) =>
+                diagnostic.source === 'csharp' && 'CS8019' === diagnostic.code?.toString()
+        )
+        .map((diagnostic) => diagnostic.range.start.line - firstUsingLine);
 
     if (unnecessaryUsingIndexs.length === 0) {
         return;
@@ -121,8 +130,12 @@ export function sortUsings(usings: string[], options: IFormatOptions) {
                 res = lhs < rhs ? -1 : 1;
                 break;
             }
-            if (lhs !== a[i]) { res++; }
-            if (rhs !== b[i]) { res--; }
+            if (lhs !== a[i]) {
+                res++;
+            }
+            if (rhs !== b[i]) {
+                res--;
+            }
             if (res !== 0) {
                 break;
             }
