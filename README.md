@@ -1,4 +1,4 @@
-# CSharpFormatUsings for Visual Studio Code
+# CSharp Format Usings With Code Action for Visual Studio Code
 
 This extension helps to format C# using statements.
 Forked from [C# Format Usings](https://marketplace.visualstudio.com/items?itemName=gaoshan0621.csharp-format-usings), **with a new features**.
@@ -26,7 +26,7 @@ Forked from [C# Format Usings](https://marketplace.visualstudio.com/items?itemNa
 
 ## Installation of release version
 
-Use instructions from marketplace: [C# Format Usings With Code Action](https://example.com/placeholder-url)
+There is no release version on the extension store. There are pre-builts version on the [Releases](https://github.com/Nat-thapas/vscode-csharp-format-usings/releases) page.
 
 ## Installation from sources
 
